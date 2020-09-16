@@ -1,30 +1,37 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<html>
+  <html>
     <head>
-        <title>Webster</title>
-        <h1>Is it my birthday?</h1>
-        <style>
-        	h1{
-        		color: blue;
-        	}
-            body{
-            	text-align: center;
-              padding-top: 17%;
-            }
-        </style>
+      <title>Webster</title>
+      <h1>Is it my birthday?</h1>
+      <style>
+        h1 {
+          color: blue;
+        }
+        body {
+          text-align: center;
+          padding-top: 17%;
+        }
+      </style>
     </head>
     <body>
-    	{% if month < 6 %}
-    	<h3 style="color:#3CB371;">It's not your birthday month yet, Webster!</h3>
-    	{% elif month == 6 and day == 24 %}
-    	<h3 style="color:#00FF00;">Yessssss! Happy birthday, Webster!</h3>
-    	{% elif month == 6 and day == 24 %}
-    	<h3 style="color:#00FF00;">Nope, happy belated birthday, Webster</h3>
-    	{% elif month == 6 and day > 25%}
-    	<h3 style="color:#FF4500;">NO! You've already celebrated your birthday this month!</h3>
-    	{% else %}
-    	<h3 style="color:#FF4500;">NO! You've already celebrated your birthday this year, your next birthday is 24th of June next year!</h3>
-    	{% endif %}
+      <!-- body part -->
+      {% if month < 6 %}
+      <h3 style="color: #3cb371">It's not your birthday month yet, Webster!</h3>
+      {% elif month == 6 and day == 24 %}
+      <h3 style="color: #00ff00">Yessssss! Happy birthday, Webster!</h3>
+      {% elif month == 6 and day == 24 %}
+      <h3 style="color: #00ff00">Nope, happy belated birthday, Webster</h3>
+      {% elif month == 6 and day > 25%}
+      <h3 style="color: #ff4500">
+        NO! You've already celebrated your birthday this month!
+      </h3>
+      {% else %}
+      <h3 style="color: #ff4500">
+        NO! You've already celebrated your birthday this year, your next
+        birthday is 24th of June next year!
+      </h3>
+      {% endif %}
     </body>
+  </html>
 </html>
