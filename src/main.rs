@@ -1,5 +1,6 @@
 use actix_web::{web, App, HttpResponse, HttpServer};
 use chrono::prelude::*;
+use env_logger::Env;
 
 async fn birthday_handler() -> HttpResponse {
     let birthday_month = "June";
@@ -24,8 +25,12 @@ async fn birthday_handler() -> HttpResponse {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    env_logger::Builder::from_env(Env::default().default_filter_or("info")).init();
+
     HttpServer::new(|| {
-        App::new().service(web::resource("/birthday").to(birthday_handler))
+        App::new()
+            .wrap(actix_web::middleware::Logger::default())
+            .service(web::resource("/birthday").to(birthday_handler))
     })
     .bind("127.0.0.1:8080")?
     .run()
