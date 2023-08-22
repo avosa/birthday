@@ -22,16 +22,28 @@ struct Query;
 #[async_graphql::Object]
 impl Query {
     async fn birthday(&self, _context: &Context<'_>) -> BirthdayResponse {
-        let birthday_month = "June";
+        let birthday_month = 6; // June (zero-based index)
         let birthday_day = 24;
 
         let current_date = Local::now();
-        let current_month = current_date.format("%B").to_string();
+        let current_month = current_date.month();
         let current_day = current_date.day();
 
         if current_month == birthday_month && current_day == birthday_day {
             BirthdayResponse {
                 message: "Happy birthday, Rust developer! Enjoy your special day!".to_string(),
+            }
+        } else if current_month == birthday_month && current_day > birthday_day && current_day <= (birthday_day + 7) {
+            let days_since_birthday = current_day - birthday_day;
+            BirthdayResponse {
+                message: format!(
+                    "Happy belated birthday! It's been {} days since your birthday. Hope it was wonderful!",
+                    days_since_birthday
+                ),
+            }
+        } else if current_month == birthday_month && current_day > (birthday_day + 7) {
+            BirthdayResponse {
+                message: "It's not your birthday anymore, but I hope you had a great one!".to_string(),
             }
         } else if current_month == birthday_month && current_day < birthday_day {
             let days_left = birthday_day - current_day;
@@ -48,6 +60,7 @@ impl Query {
         }
     }
 }
+
 
 async fn index(schema: web::Data<Schema<Query, EmptyMutation, EmptySubscription>>) -> HttpResponse {
     let request = async_graphql::Request::new("{ birthday { message } }");
