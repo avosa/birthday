@@ -481,7 +481,7 @@ dependencies = [
  "async-graphql",
  "chrono",
  "env_logger",
- "serde",
+ "log",
  "serde_json",
 ]
 
