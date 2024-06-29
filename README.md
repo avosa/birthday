@@ -36,6 +36,8 @@ This repository hosts a simple yet delightful Birthday API built with Rust and G
 
 - If you'd like to customize the birthday message, you can do so by modifying the code in the `main.rs` file. Look for the `birthday` function in the `Query` struct and update the message strings to your liking.
 
+**IMPORTANT:** The frontend implementation of this graphql API is available at [birthday-ui](https://github.com/avosa/birthday-ui).
+
 ## Contributing
 
 - Feel free to contribute to this project by opening issues or creating pull requests. Your contributions are highly appreciated!

@@ -1,3 +1,4 @@
+use actix_cors::Cors;
 use actix_web::{web, App, HttpResponse, HttpServer, middleware::Logger};
 use async_graphql::http::{playground_source, GraphQLPlaygroundConfig};
 use async_graphql::{Context, EmptyMutation, EmptySubscription, Schema};
@@ -77,16 +78,24 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .wrap(Logger::default())
+            .wrap(
+                Cors::default()
+                    .allow_any_origin()
+                    .allow_any_method()
+                    .allow_any_header()
+            )
             .app_data(web::Data::new(schema.clone()))
             .service(web::resource("/").route(web::post().to(index)))
-            .route("/", web::get().to(|| {
-                HttpResponse::Found()
-                    .header("Location", "/playground")
-                    .finish()
-            }))
+            .route("/", web::get().to(redirect_to_playground))
             .route("/playground", web::get().to(playground))
     })
     .bind("127.0.0.1:8080")?
     .run()
     .await
+}
+
+async fn redirect_to_playground() -> HttpResponse {
+    HttpResponse::Found()
+        .append_header(("Location", "/playground"))
+        .finish()
 }
